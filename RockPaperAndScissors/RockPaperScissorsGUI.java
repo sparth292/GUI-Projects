@@ -1,113 +1,95 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
+public class RockPaperScissorsGUI extends JFrame implements ActionListener {
+    JButton rockButton, paperButton, scissorButton;
+    JLabel computerChoiceLabel, computerScoreLabel, playerScoreLabel;
+    RockPaperScissors rockPaperScissors;
 
-public class RockPaperScissorsGUI extends JFrame {
-       // playerButtons
-       JButton rockButton , paperButton , scissorButton;
-       JLabel computerChoice;
-   RockPaperScissorsGUI(){
-    super("Rock Paper And Scissors");
-    setSize(450,500);
-    setLayout(null);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    addGuiComponents();
-    
-   }
-   private void addGuiComponents(){
+    RockPaperScissorsGUI() {
+        super("Rock Paper Scissors");
+        setSize(450, 500);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        rockPaperScissors = new RockPaperScissors();
+        addGuiComponents();
+    }
 
-    JLabel computerScoreLabel = new JLabel("Computer : 0");
-    computerScoreLabel.setBounds(0,43,450,30);
-    computerScoreLabel.setFont(new Font("Dialog" , Font.BOLD , 26));
-    computerScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    
-    add(computerScoreLabel);
-   
-    computerChoice = new JLabel("?");
-    
-    computerChoice.setBounds(175,118,98,81);    
-    computerChoice.setFont(new Font("Dialog" , Font.BOLD , 26));
-    
-    computerScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    computerScoreLabel.setVerticalAlignment(SwingConstants.CENTER);
-    
-    computerChoice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    computerChoice.setHorizontalAlignment(SwingConstants.CENTER);
-    
-    add(computerChoice);
-    
-    JLabel playerScoreLabel = new JLabel("Player : 0"); 
-    
-    playerScoreLabel.setBounds(140,317,150,30);
-    playerScoreLabel.setFont(new Font("Dialog" , Font.BOLD , 26));
-    playerScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    
-    add(playerScoreLabel);
-  
-    rockButton = new JButton("Rock");
-    rockButton.setBounds(40,370,105,81);
-    rockButton.setFont(new Font("Dialog" , Font.BOLD , 16));
-    add(rockButton);
+    private void addGuiComponents() {
+        computerScoreLabel = new JLabel("Computer: 0");
+        computerScoreLabel.setBounds(0, 43, 450, 30);
+        computerScoreLabel.setFont(new Font("Dialog", Font.BOLD, 26));
+        computerScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(computerScoreLabel);
 
-    paperButton = new JButton("Paper");
-    paperButton.setBounds(160,370,105,81);
-    paperButton.setFont(new Font("Dialog" , Font.BOLD , 16));
-    add(paperButton);
+        computerChoiceLabel = new JLabel("?");
+        computerChoiceLabel.setBounds(175, 118, 98, 81);
+        computerChoiceLabel.setFont(new Font("Dialog", Font.BOLD, 26));
+        computerChoiceLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        computerChoiceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(computerChoiceLabel);
 
-    scissorButton = new JButton("Scissor");
-    scissorButton.setBounds(280,370,105,81);
-    scissorButton.setFont(new Font("Dialog" , Font.BOLD , 16));
-    add(scissorButton);
-    
-    rockButton.addActionListener(e -> showDialog("You chose Rock!"));
-    paperButton.addActionListener(e -> showDialog("You chose Paper!"));
-    scissorButton.addActionListener(e -> showDialog("You chose Scissors!"));
+        playerScoreLabel = new JLabel("Player: 0");
+        playerScoreLabel.setBounds(140, 317, 150, 30);
+        playerScoreLabel.setFont(new Font("Dialog", Font.BOLD, 26));
+        playerScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(playerScoreLabel);
 
-    
+        rockButton = new JButton("Rock");
+        rockButton.setBounds(40, 370, 105, 81);
+        rockButton.setFont(new Font("Dialog", Font.BOLD, 16));
+        rockButton.addActionListener(this);
+        add(rockButton);
 
-}
+        paperButton = new JButton("Paper");
+        paperButton.setBounds(160, 370, 105, 81);
+        paperButton.setFont(new Font("Dialog", Font.BOLD, 16));
+        paperButton.addActionListener(this);
+        add(paperButton);
 
+        scissorButton = new JButton("Scissors");
+        scissorButton.setBounds(280, 370, 105, 81);
+        scissorButton.setFont(new Font("Dialog", Font.BOLD, 16));
+        scissorButton.addActionListener(this);
+        add(scissorButton);
+    }
 
-private void showDialog(String message){
-     JDialog resultDialog = new JDialog(this,"Result", true);
-     resultDialog.setSize(227,124);
-     resultDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-     resultDialog.setResizable(false);
-     resultDialog.setLayout(null);
+    private void showDialog(String message) {
+        JDialog resultDialog = new JDialog(this, "Result", true);
+        resultDialog.setSize(250, 150);
+        resultDialog.setLayout(new BorderLayout());
 
-     JLabel resultLabel = new JLabel(message);
+        JLabel resultLabel = new JLabel(message, SwingConstants.CENTER);
         resultLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        resultLabel.setBounds(10, 10, 200, 50);
-        resultDialog.add(resultLabel);
+        resultDialog.add(resultLabel, BorderLayout.CENTER);
 
-        resultDialog.setLocationRelativeTo(this);
-        resultDialog.setVisible(true);
-
-        JButton tryAgainButton = new JButton("Try Again?");
-        tryAgainButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                   computerChoice.setText("?");
-                   resultDialog.dispose();
-            }
+        JButton tryAgainButton = new JButton("Try Again");
+        tryAgainButton.addActionListener(e -> {
+            computerChoiceLabel.setText("?");
+            resultDialog.dispose();
         });
 
-        resultDialog.add(tryAgainButton);
-
+        resultDialog.add(tryAgainButton, BorderLayout.SOUTH);
         resultDialog.setLocationRelativeTo(this);
         resultDialog.setVisible(true);
-    }     
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String playerChoice = e.getActionCommand();
+        String result = rockPaperScissors.playRockPaperScissors(playerChoice);
+        
+        computerChoiceLabel.setText(rockPaperScissors.getComputerChoice());
+        computerScoreLabel.setText("Computer: " + rockPaperScissors.getComputerScore());
+        playerScoreLabel.setText("Player: " + rockPaperScissors.getPlayerScore());
+        
+        showDialog(result);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new RockPaperScissorsGUI().setVisible(true));
+    }
 }
