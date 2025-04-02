@@ -25,7 +25,8 @@ public class CalculatorScreen extends JFrame {
        JButton b7 = new JButton("7");
        JButton b8 = new JButton("8");
        JButton b9 = new JButton("9");
-
+       JButton b0 = new JButton("0");
+       
        JButton addButton = new JButton("+");
        JButton subButton = new JButton("-");
        JButton mulButton = new JButton("*");
@@ -36,10 +37,12 @@ public class CalculatorScreen extends JFrame {
        JPanel p2 = new JPanel();
        JPanel p3 = new JPanel();
        JPanel p4 = new JPanel();
+       JPanel p5 = new JPanel();
 
         CalculatorScreen() {
 
         t1.setEditable(false);
+        
         
 
         p1.add(b1);
@@ -61,10 +64,12 @@ public class CalculatorScreen extends JFrame {
         p2.setBounds(7,70,138,32);
         p3.setBounds(7,100,138,32);
         p4.setBounds(148,7,50,130);
+        p5.setBounds(-10,130,130,130);
 
         t1.setBounds(7,7,140,30);
-        equalToButton.setBounds(7, 140, 185, 30);
-
+        
+        p5.add(b0);
+        p5.add(equalToButton);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -76,7 +81,7 @@ public class CalculatorScreen extends JFrame {
         this.add(p2);
         this.add(p1);
         this.add(t1); 
-        this.add(equalToButton);
+        this.add(p5);
 
         this.setTitle("CALC");
         this.setResizable(false);
@@ -144,6 +149,14 @@ public class CalculatorScreen extends JFrame {
                   t1.setText(t1.getText() + "9");
               }
           });
+
+          b0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                t1.setText(t1.getText() + "0");
+            }
+        });
+
           
        addButton.addActionListener((ActionListener) new ActionListener() {
               @Override
