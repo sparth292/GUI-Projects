@@ -1,4 +1,5 @@
 package CookieClicker;
+
 class App{
     public void finalize(){
            System.out.println("Done");          
